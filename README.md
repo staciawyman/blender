@@ -11,18 +11,18 @@ BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target 
 
 ## Input:
 
-	guide sequence	Guide sequence should be provided 5'-> 3' without the PAM sequence.
+**guide sequence**	Guide sequence should be provided 5'-> 3' without the PAM sequence.
 
-	IP bamfile	This is the aligned bamfile for the MRE11 pulldown ChIP-Seq sample. BLENDER will extract the reference sequence fromthis file for use in the analysis. I typically use BWA for alignment, but bowtie2 can be used as well. BLENDER has not been tested with bamfiles from other aligners.
+IP bamfile	This is the aligned bamfile for the MRE11 pulldown ChIP-Seq sample. BLENDER will extract the reference sequence fromthis file for use in the analysis. I typically use BWA for alignment, but bowtie2 can be used as well. BLENDER has not been tested with bamfiles from other aligners.
 
-	control bamfile	This is a bamfile from ChIP-Seq with BFP or GFP or similar pulldown and is used as to filter false positives. If there are greater than 10 reads in the control sample, the hit is filtered out. This option can be set by the user.
+control bamfile	This is a bamfile from ChIP-Seq with BFP or GFP or similar pulldown and is used as to filter false positives. If there are greater than 10 reads in the control sample, the hit is filtered out. This option can be set by the user.
 
 
 ## Options:
 
-	-p	List of 2 nucleotide PAM sequences, separated by commas, in quotes. The default is "GG,AG".
+-p	List of 2 nucleotide PAM sequences, separated by commas, in quotes. The default is "GG,AG".
 
-	-t	Threshold for number of read ends at a putative cut site. Default is 3. For maximum sensitivity, this can be set to 2 and the filtering scheme applied. BEWARE that this dramatically slows down running time. It can increase runtime from ~30min to 24hrs, depending on the guide.
+-t	Threshold for number of read ends at a putative cut site. Default is 3. For maximum sensitivity, this can be set to 2 and the filtering scheme applied. BEWARE that this dramatically slows down running time. It can increase runtime from ~30min to 24hrs, depending on the guide.
 
 
 ## Output:
