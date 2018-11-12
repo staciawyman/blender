@@ -1,29 +1,46 @@
 #!/usr/bin/perl
-# 11/11/18 Stacia Wyman
-# BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target editing sites from MRE11 ChIP-Seq 
-# experiments.  It takes aligned bamfiles from the IP experiment and (optionally) a control bamfile and identifies 
-# locations with stacks of reads at putative cutsites. PAM sequences can be provided by the user as well as a guide 
-# sequence. BLENDER makes use of the ENCODE ChIP-Seq Blacklists for human and mouse which are lists of regions in the 
-# genome that have artifactual large numbers of reads. These lists and the control bam plus PAM sequences and the guide 
-# are used to filter out false positives.  BLENDER runs on mouse mm10 and human hg38 genomes (blacklists coordinates 
-# are for these genomes).
+
+# 11/11/18 Stacia Wyman staciawyman@berkeley.edu
+
+# BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target editing
+# sites from MRE11 ChIP-Seq  experiments.  It takes aligned bamfiles from the IP 
+# experiment and (optionally) a control bamfile and identifies locations with stacks
+# of reads at putative cutsites. PAM sequences can be provided by the user as well as
+# a guide sequence. BLENDER makes use of the ENCODE ChIP-Seq Blacklists for human and
+# mouse which are lists of regions in the genome that have artifactual large numbers 
+# of reads. These lists and the control bam plus PAM sequences and the guide 
+# are used to filter out false positives.  BLENDER runs on mouse mm10 and 
+# human hg38 genomes (blacklists coordinates are for these genomes).
+
+use Getopt::Long;
 
 my %both_starts;
+my $verbose = 0;
+my $debug = 0;
+my $pams   = "GG,AG";
+my $threshold = 2;
+GetOptions ("t=i" => \$threshold,    # numeric
+            "p=s"   => \$pams,
+            "debug"    => \$debug,
+            "verbose"  => \$verbose)   # flag
+  or die("Error in command line arguments\n");
 
-$debug = 0;
-$verbose = 0;
 $control_bam = "";
-if ($#ARGV < 2) { print "Missing argumnet $#ARGV \n"; exit; }
+if ($#ARGV < 2) { print "Missing argument $#ARGV \n"; exit; }
 if (length($ARGV[0]) != 20) { print "Please provide a 20bp guide sequence.$ARGV[0]\n"; exit; }
 $input_guide = $ARGV[0];
 $edited_bam = $ARGV[1];
 $control_bam = $ARGV[2];
-@pamlist = ( "GG","AG" );
+#@pamlist = ( "GG","AG" );
+@pamlist = split(/,/,$pams);
 # Test params
 $check_guide = 1;
 $max_mismatches = 8;
 $min_discoscore = 3;
-$threshold = 3;
+
+if ($verbose) {
+print "Options: pams @pamlist\nVerbose $verbose\nThreshold $threshold\nGuide $input_guide\nEditedBam $edited_bam\n";
+}
 
 # Get organism/location of reference genome from @PG line in bamfile header
 $PG = `samtools view -H $edited_bam | grep PG`;
@@ -40,7 +57,7 @@ if ($genome =~ /mm10/) {
     @chroms = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,"X","Y");
 }
 
-print "Chr:Start-End	Cutsite	Discoscore	Cutsite Ends	Strand/PAM	Guide sequence	Mismatches\n";
+print "Chr:Start-End\tCutsite\tDiscoscore\tCutsite Ends\tStrand\tPAM\tGuide sequence\tMismatches\n";
 
 # For each chromosome, traverse bam file, looking for putative cutsites and output them
 foreach $i (@chroms) {
@@ -88,7 +105,7 @@ foreach $i (@chroms) {
 	#($both_starts{$start-1}+$both_starts{$start}+$both_starts{$start+2}) >= $threshold)) {
 	    if ($debug) {print "Check both_starts $c:$start, $both_starts{$start}\n";}
 	    if (blacklist($c,$start)) { 
-    	        if ($verbose) { print "$c:$start\t$sum\t$both_starts{$start}\tWARNING:blacklisted\n"; }
+    	        if ($verbose) { print "$c:$start\t$sum\t$both_starts{$start}\tFILTERED:blacklisted\n"; }
 		next; 
 	    }
 	    if ($control_bam) {
@@ -111,7 +128,7 @@ foreach $i (@chroms) {
 	        ($x,$y,$depth) = split(/\t/,$d);
 	 	if ($depth > 0 ) {
 	            if ($both_starts{$start}/$depth < .25) { 
-    	                if ($verbose){ print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tantisense N$pamleft\t\tWARNING:deep area\n";}
+    	                if ($verbose){ print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tantisense\tN$pamleft\t\tFILTERED:deep area\n";}
 			$over_max = 1;
 		    }
 		}
@@ -124,12 +141,12 @@ foreach $i (@chroms) {
 		    $guide = revcomp($guide);
 		    if ($check_guide)  {
 			if ($mm <= $max_mismatches) {
-    	                    print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tantisense N$pamleft\t$guide\t$mm\n";
+    	                    print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tantisense\tN$pamleft\t$guide\t$mm\n";
 			} else {
-    	                    if ($verbose) {print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tantisense N$pamleft\t$guide FILTERED: $mm mismatches\n";}
+    	                    if ($verbose) {print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tantisense\tN$pamleft\t$guide FILTERED: $mm mismatches\n";}
 			}
     		    } else {
-    	                print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tantisense N$pamleft\t$guide\t$mm\n";
+    	                print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tantisense\tN$pamleft\t$guide\t$mm\n";
 		    }
 		}
     	    }
@@ -139,7 +156,7 @@ foreach $i (@chroms) {
 	        ($x,$y,$depth) = split(/\t/,$d);
 	 	if ($depth > 0 ) {
 	            if ($both_starts{$start}/$depth < .25) { 
-    	                if ($verbose) {print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tsense N$pamright\t$guide\tWARNING:deep area\n";}
+    	                if ($verbose) {print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tsense\tN$pamright\t$guide\tFILTERED:deep area\n";}
 			$over_max = 1;
 			next;
 		    }
@@ -152,13 +169,13 @@ foreach $i (@chroms) {
 		    my $mm = guide_mm($input_guide,$guide);
 		    if ($check_guide)  { # guide was given as input parameter
 			if ($mm <= $max_mismatches) {
-    	                    print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tsense N$pamright\t$guide\t$mm\n";
+    	                    print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tsense\tN$pamright\t$guide\t$mm\n";
 			} else {
-    	                    if ($verbose) {print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tsense N$pamright\t$guide FILTERED: $mm mismatches\n";}
+    	                    if ($verbose) {print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tsense\tN$pamright\t$guide FILTERED: $mm mismatches\n";}
 		 	    next;
 			}
 		    } else {
-    	                print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tsense N$pamright\t$guide\t$mm\n";
+    	                print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tsense\tN$pamright\t$guide\t$mm\n";
 		    }
 		}
     	    }

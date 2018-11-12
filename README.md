@@ -9,13 +9,19 @@ BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target 
 
 `perl blender.pl [options] <guide sequence> <IP bamfile> <control bamfile>  | perl filter.pl > output.txt`
 
+`perl blender.pl [options] <guide sequence> <IP bamfile> <control bamfile>  | perl filter_pool.pl > pooled_output.txt`
+
+BLENDER can be run with or without being piped through the filtering script. There are two filtering scripts provided; the standard filter.pl script that implements the standard scoring scheme, and the filter_pool.pl script that implements the more stringent scoring scheme for pooled samples.
+
+![alt text](https://github.com/staciawyman/blender/scoring_scheme.png)
+
 ## Input:
 
 **guide sequence**	Guide sequence should be provided 5'-> 3' without the PAM sequence.
 
-**IP bamfile**	This is the aligned bamfile for the MRE11 pulldown ChIP-Seq sample. BLENDER will extract the reference sequence fromthis file for use in the analysis. I typically use BWA for alignment, but bowtie2 can be used as well. BLENDER has not been tested with bamfiles from other aligners.
+**IP bamfile**	This is the aligned bamfile for the MRE11 pulldown of ChIP-Seq of a Cas9 edited sample. BLENDER will extract the reference sequence fromthis file for use in the analysis. I typically use BWA for alignment, but bowtie2 can be used as well. BLENDER has not been tested with bamfiles from other aligners.
 
-**control bamfile**	This is a bamfile from ChIP-Seq with BFP or GFP or similar pulldown and is used as to filter false positives. If there are greater than 10 reads in the control sample, the hit is filtered out. This option can be set by the user.
+**control bamfile**	This is a ChIP-Seq for MRE11 pulldown from either unedited cells or cells that have been edited with a non-targeting gRNA. If there are greater than 10 reads in the control sample, the hit in the edited sample is filtered out. This option can be set by the user.
 
 
 ## Options:
@@ -24,9 +30,11 @@ BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target 
 
 **-t**	Threshold for number of read ends at a putative cut site. Default is 3. For maximum sensitivity, this can be set to 2 and the filtering scheme applied. BEWARE that this dramatically slows down running time. It can increase runtime from ~30min to 24hrs, depending on the guide.
 
+**--verbose** This flag will turn on output of filtered out candidates while running if filtered out for more than maximum mismatches (8) in the guide sequence, or the hit occurs in a blacklist region or it is in a very deep region and thus likely an artifact.
+
 
 ## Output:
 
-The output of blender.pl is unfiltered. This output can be used for exploring bamfiles to assess whether adjustments might be needed for the scoring scheme. Alternatively, the output of blender.pl can be directly piped into filter.pl to apply scoring scheme and get a list of filtered results. The output has the following columns: Chr:Start-End	Cutsite	Discoscore	Cutsite Ends	Strand/PAM	Guide sequence	Mismatches
+blender.pl outputs to stdout and the output is unfiltered. This raw output can be used for exploring bamfiles to assess whether adjustments might be needed for the scoring scheme. Alternatively, the output of blender.pl can be directly piped into filter.pl to apply scoring scheme and get a list of filtered results. The output has the following columns: Chr:Start-End	Cutsite	Discoscore	Cutsite Ends	Strand/PAM	Guide sequence	Mismatches
 
 ## Citing: TBD
