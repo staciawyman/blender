@@ -19,11 +19,11 @@ BLENDER can be run with or without being piped through the filtering script. The
 
 ## Input:
 
-**guide sequence**	Guide sequence should be provided 5'-> 3' without the PAM sequence.
+`**guide sequence**`	Guide sequence should be provided 5'-> 3' without the PAM sequence.
 
-**IP bamfile**	This is the aligned bamfile for the MRE11 pulldown of ChIP-Seq of a Cas9 edited sample. BLENDER will extract the reference sequence fromthis file for use in the analysis. I typically use BWA for alignment, but bowtie2 can be used as well. BLENDER has not been tested with bamfiles from other aligners.
+`**IP bamfile**`	This is the aligned bamfile for the MRE11 pulldown of ChIP-Seq of a Cas9 edited sample. BLENDER will extract the reference sequence fromthis file for use in the analysis. I typically use BWA for alignment, but bowtie2 can be used as well. BLENDER has not been tested with bamfiles from other aligners.
 
-**control bamfile**	This is a ChIP-Seq for MRE11 pulldown from either unedited cells or cells that have been edited with a non-targeting gRNA. If there are greater than 10 reads in the control sample, the hit in the edited sample is filtered out. This option can be set by the user.
+`**control bamfile**`	This is a ChIP-Seq for MRE11 pulldown from either unedited cells or cells that have been edited with a non-targeting gRNA. If there are greater than 10 reads in the control sample, the hit in the edited sample is filtered out. This option can be set by the user.
 
 
 ## Options:
