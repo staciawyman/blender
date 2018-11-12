@@ -13,7 +13,7 @@ BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target 
 
 BLENDER can be run with or without being piped through the filtering script. There are two filtering scripts provided; the standard filter.pl script that implements the standard scoring scheme, and the filter_pool.pl script that implements the more stringent scoring scheme for pooled samples.
 
-![alt text](https://github.com/staciawyman/blender/scoring_scheme.png)
+![scoring scheme](https://github.com/staciawyman/blender/blob/master/scoring_scheme.png)
 
 ## Input:
 
