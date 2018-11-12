@@ -3,6 +3,8 @@
 
 BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target editing sites from MRE11 ChIP-Seq experiments.  It takes aligned bamfiles from the IP experiment and (optionally) a control bamfile and identifies locations with stacks of reads at putative cutsites. PAM sequences can be provided by the user as well as a guide sequence. BLENDER makes use of the ENCODE ChIP-Seq Blacklists for human and mouse which are lists of regions in the genome that have artifactual large numbers of reads. These lists and the control bam plus PAM sequences and the guide are used to filter out false positives.  BLENDER runs on mouse mm10 and human hg38 genomes (blacklists coordinates are for these genomes). 
 
+![schematic](https://github.com/staciawyman/blender/blob/master/BLENDER_schematic.png)
+
 ## Usage:
 
 `perl blender.pl [options] <guide sequence> <IP bamfile> <control bamfile>  > unfiltered_output.txt`
