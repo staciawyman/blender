@@ -3,7 +3,7 @@
 
 while(<>) {
     if ($_ !~ /^chr/) { print; } # print header line 
-    ($coord,$cut,$disco,$ends,$pam,$guide,$mm) = split(/\t/);
+    ($coord,$cut,$disco,$ends,$strand,$pam,$guide,$mm) = split(/\t/);
     if ($mm <= 7 && $disco >= 4) { print; next;}
     if ($mm <= 5 && $disco >= 3) { print; next;}
     if ($mm <= 3 && $disco >= 2) { print; next;}
