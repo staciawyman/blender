@@ -19,27 +19,40 @@ my $verbose = 0;
 my $debug = 0;
 my $pams   = "GG,AG";
 my $threshold = 2;
-GetOptions ("t=i" => \$threshold,    # numeric
+GetOptions ("c=i" => \$threshold,    # numeric
             "p=s"   => \$pams,
-            "debug"    => \$debug,
+            "debug"    => \$debug,     # flag
+	    "no_guide" => \$no_guide,  # flag
             "verbose"  => \$verbose)   # flag
-  or die("Error in command line arguments\n");
+  or die("USAGE: perl blender.pl [options] <guide sequence> <edited bam> <control bam>\n");
 
 $control_bam = "";
-if ($#ARGV < 2) { print "Missing argument $#ARGV \n"; exit; }
-if (length($ARGV[0]) != 20) { print "Please provide a 20bp guide sequence.$ARGV[0]\n"; exit; }
-$input_guide = $ARGV[0];
-$edited_bam = $ARGV[1];
-$control_bam = $ARGV[2];
-#@pamlist = ( "GG","AG" );
+if (!$no_guide) {
+    if ($#ARGV < 2) { print "Missing argument $#ARGV \n"; exit; }
+    if (length($ARGV[0]) != 20) { print "Please provide a 20bp guide sequence.$ARGV[0]\n"; exit; }
+    $input_guide = $ARGV[0];
+    $edited_bam = $ARGV[1];
+    $control_bam = $ARGV[2];
+} else {
+    $edited_bam = $ARGV[0];
+    $control_bam = $ARGV[1];
+}
+
 @pamlist = split(/,/,$pams);
 # Test params
 $check_guide = 1;
+if ($no_guide) {
+    $check_guide = 0;
+}
 $max_mismatches = 8;
 $min_discoscore = 3;
 
 if ($verbose) {
-print "Options: pams @pamlist\nVerbose $verbose\nThreshold $threshold\nGuide $input_guide\nEditedBam $edited_bam\n";
+    if ($no_guide) {
+        print "Options: pams @pamlist\nVerbose $verbose\nThreshold $threshold\nNo Guide TRUE\nEditedBam $edited_bam\n";
+    } else {
+        print "Options: pams @pamlist\nVerbose $verbose\nThreshold $threshold\nGuide $input_guide\nEditedBam $edited_bam\n";
+    }
 }
 
 # Get organism/location of reference genome from @PG line in bamfile header
@@ -50,10 +63,10 @@ if ($PG =~ /sampe\s+(.+?)\s+/) {
 # Set blacklist and chromosome list from genome, assumes mm10 and hg38 and 
 # that "mm10" is in name of reference genome
 if ($genome =~ /mm10/) {
-    $blacklist_file = "mm10.blacklist.bed";
+    $blacklist_file = "./mm10.blacklist.bed";
     @chroms = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,"X","Y");
 } else { # assume human
-    $blacklist_file = "hg38.blacklist.bed";
+    $blacklist_file = "./hg38.blacklist.bed";
     @chroms = (1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,"X","Y");
 }
 
@@ -113,7 +126,7 @@ foreach $i (@chroms) {
 	        chomp($d_control);
 	        ($x,$y,$depth_con) = split(/\t/,$d_control);
 	        if ($depth_con > 10) { 
-		    if ($verbose) {print "CONTROL Skipping $l, $depth_con, $both_starts{$start} \n";}
+		    #if ($verbose) {print "CONTROL Skipping $l, $depth_con, $both_starts{$start} \n";}
 		    next;
 	        }
 	    } 
@@ -137,8 +150,8 @@ foreach $i (@chroms) {
     		    my $guide = get_guide($c,$s,$e);
     		    my $sum = add_window($start,5);
 		    if ($sum < $min_discoscore) { next;} 
-		    my $mm = guide_mm($input_guide,$guide);
 		    $guide = revcomp($guide);
+		    my $mm = guide_mm($input_guide,$guide);
 		    if ($check_guide)  {
 			if ($mm <= $max_mismatches) {
     	                    print "$c:$s-$e\t$start\t$sum\t$both_starts{$start}\tantisense\tN$pamleft\t$guide\t$mm\n";
