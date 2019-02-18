@@ -1,5 +1,6 @@
 #!/usr/bin/perl
 
+# Version 1.0 
 # 11/11/18 Stacia Wyman staciawyman@berkeley.edu
 
 # BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target editing
