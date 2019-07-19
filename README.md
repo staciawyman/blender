@@ -40,6 +40,15 @@ BLENDER can be run with or without being piped through the filtering script. The
 
 ## Output:
 
-blender.pl outputs to stdout and the output is unfiltered. This raw output can be used for exploring bamfiles to assess whether adjustments might be needed for the scoring scheme. Alternatively, the output of blender.pl can be directly piped into filter.pl to apply scoring scheme and get a list of filtered results. The output has the following columns: Chr:Start-End	Cutsite	Discoscore	Cutsite Ends	Strand/PAM	Guide sequence	Mismatches
+blender.pl outputs to stdout and the output is unfiltered. This raw output can be used for exploring bamfiles to assess whether adjustments might be needed for the scoring scheme. Alternatively, the output of blender.pl can be directly piped into filter.pl to apply scoring scheme and get a list of filtered results. The output has the following columns: 
+`Chr:Start-End`
+`Cutsite`
+`Discoscore`
+`Cutsite Ends`
+`Strand/PAM`
+`Guide sequence`
+`Mismatches`
 
-## Citing: TBD
+## Citing: 
+*Wienert, B., *Wyman, S. K., Richardson, C. D., Yeh, C. D., Akcakaya, P., Porritt, M. J., Morlock, M., Vu, J. T., Kazane, K. R., Watry, H. L., Judge, L. M., Conklin, B. R., Maresca, M. and Corn, J. E. (2019). Unbiased detection of CRISPR off-targets in vivo using DISCOVER-Seq. Science. *contributed equally
+
