@@ -25,18 +25,20 @@ GetOptions ("c=i" => \$threshold,    # numeric
             "debug"    => \$debug,     # flag
 	    "no_guide" => \$no_guide,  # flag
             "verbose"  => \$verbose)   # flag
-  or die("USAGE: perl blender.pl [options] <guide sequence> <edited bam> <control bam>\n");
+  or die("USAGE: perl blender.pl [options] <reference genome> <guide sequence> <edited bam> <control bam>\n");
 
 $control_bam = "";
 if (!$no_guide) {
-    if ($#ARGV < 2) { print "Missing argument $#ARGV \n"; exit; }
-    if (length($ARGV[0]) != 20) { print "Please provide a 20bp guide sequence.$ARGV[0]\n"; exit; }
-    $input_guide = $ARGV[0];
+    if ($#ARGV < 3) { print "Missing argument $#ARGV \n"; exit; }
+    if (length($ARGV[1]) != 20) { print "Please provide a 20bp guide sequence.$ARGV[0]\n"; exit; }
+    $genome = $ARGV[0];
+    $input_guide = $ARGV[1];
+    $edited_bam = $ARGV[2];
+    $control_bam = $ARGV[3];
+} else {
+    $genome = $ARGV[0];
     $edited_bam = $ARGV[1];
     $control_bam = $ARGV[2];
-} else {
-    $edited_bam = $ARGV[0];
-    $control_bam = $ARGV[1];
 }
 
 @pamlist = split(/,/,$pams);
@@ -56,11 +58,13 @@ if ($verbose) {
     }
 }
 
+# Used to get $genome from bam file, but it only works for BWA, so now taking it as argument.
 # Get organism/location of reference genome from @PG line in bamfile header
-$PG = `samtools view -H $edited_bam | grep PG`;
-if ($PG =~ /sampe\s+(.+?)\s+/) {
-    $genome = $1;
-}
+# $PG = `samtools view -H $edited_bam | grep PG`;
+# if ($PG =~ /sampe\s+(.+?)\s+/) {
+#     $genome = $1;
+# }
+
 # Set blacklist and chromosome list from genome, assumes mm10 and hg38 and 
 # that "mm10" is in name of reference genome
 if ($genome =~ /mm10/) {
@@ -203,7 +207,7 @@ sub check_pam_left {
     $s = $x-5; $e = $x-4;
     my $coords = $chr.":".$s."-".$e;
     
-    open(F,"samtools faidx $genome $coords  | ");
+    open(F,"samtools faidx $genome $coords  | ") || die "Couldnt open $!";
     while (<F>) {
 	if (/^>/) { next; }
 	chomp;
@@ -225,7 +229,7 @@ sub check_pam_right {
     my $ref_pam = "";
     $s = $x+5; $e = $x+6;
     $coords = $chr.":".$s."-".$e;
-    open(F,"samtools faidx $genome $coords  | ");
+    open(F,"samtools faidx $genome $coords  | ") || die "Couldnt open $!";
     while (<F>) {
 	chomp;
 	if (/^>/) { next; }
@@ -242,7 +246,7 @@ sub get_guide {
     my ($chr,$start,$end) = @_;
 
     $coords = $chr.":".$start."-".$end;
-    open(F,"samtools faidx $genome $coords | ");
+    open(F,"samtools faidx $genome $coords | ") || die "Couldnt open $!";
     while (<F>) {
 	chomp;
 	if (/^>/) { next; } 
@@ -254,7 +258,7 @@ sub get_guide_from_bam {
     my ($chr,$start,$end) = @_;
 
     $coords = $chr.":".$start."-".$end;
-    open(F,"samtools mpileup -r $coords -f $genome $edited_bam 2>/dev/null | ");
+    open(F,"samtools mpileup -r $coords -f $genome $edited_bam 2>/dev/null | ") || die "Couldnt open $!";
     $str = "";
     while (<F>) {
 	chomp;

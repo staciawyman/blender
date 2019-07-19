@@ -7,11 +7,11 @@ BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target 
 
 ## Usage:
 
-`perl blender.pl [options] <guide sequence> <IP bamfile> <control bamfile>  > unfiltered_output.txt`
+`perl blender.pl [options] <reference genome> <guide sequence> <IP bamfile> <control bamfile>  > unfiltered_output.txt`
 
-`perl blender.pl [options] <guide sequence> <IP bamfile> <control bamfile>  | perl filter.pl > output.txt`
+`perl blender.pl [options] <reference genome> <guide sequence> <IP bamfile> <control bamfile>  | perl filter.pl > output.txt`
 
-`perl blender.pl [options] <guide sequence> <IP bamfile> <control bamfile>  | perl filter_pool.pl > pooled_output.txt`
+`perl blender.pl [options] <reference genome> <guide sequence> <IP bamfile> <control bamfile>  | perl filter_pool.pl > pooled_output.txt`
 
 BLENDER can be run with or without being piped through the filtering script. There are two filtering scripts provided; the standard filter.pl script that implements the standard scoring scheme, and the filter_pool.pl script that implements the more stringent scoring scheme for pooled samples.
 <CENTER>
@@ -21,6 +21,8 @@ BLENDER can be run with or without being piped through the filtering script. The
 </CENTER>
 
 ## Input:
+
+`genome`	Path to reference genome. If reference has "mm10" in it, then the mouse blacklist coordinates will be used. Otherwise, human is assumed and the hg38 blacklist coordinates will be used.
 
 `guide sequence`	Guide sequence should be provided 5'-> 3' without the PAM sequence.
 
@@ -41,12 +43,19 @@ BLENDER can be run with or without being piped through the filtering script. The
 ## Output:
 
 blender.pl outputs to stdout and the output is unfiltered. This raw output can be used for exploring bamfiles to assess whether adjustments might be needed for the scoring scheme. Alternatively, the output of blender.pl can be directly piped into filter.pl to apply scoring scheme and get a list of filtered results. The output has the following columns: 
+
 `Chr:Start-End`
+
 `Cutsite`
+
 `Discoscore`
+
 `Cutsite Ends`
+
 `Strand/PAM`
+
 `Guide sequence`
+
 `Mismatches`
 
 ## Citing: 
