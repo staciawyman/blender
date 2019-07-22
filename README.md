@@ -71,6 +71,10 @@ run_blender.sh outputs unfiltered_blender_hits.txt and filtered_blender_hits.txt
 
 `Mismatches`
 
+BLENDER also creates an svg image of the hits something like this.
+
+![blender sample output](https://github.com/staciawyman/blender/blob/master/blender_hits.png)
+
 ## Citing: 
 *Wienert, B., *Wyman, S. K., Richardson, C. D., Yeh, C. D., Akcakaya, P., Porritt, M. J., Morlock, M., Vu, J. T., Kazane, K. R., Watry, H. L., Judge, L. M., Conklin, B. R., Maresca, M. and Corn, J. E. (2019). Unbiased detection of CRISPR off-targets in vivo using DISCOVER-Seq. Science. *contributed equally
 
