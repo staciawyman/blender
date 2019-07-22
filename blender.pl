@@ -19,7 +19,7 @@ my %both_starts;
 my $verbose = 0;
 my $debug = 0;
 my $pams   = "GG,AG";
-my $threshold = 2;
+my $threshold = 3;
 GetOptions ("c=i" => \$threshold,    # numeric
             "p=s"   => \$pams,
             "debug"    => \$debug,     # flag
