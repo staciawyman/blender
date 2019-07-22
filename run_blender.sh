@@ -26,7 +26,7 @@ if [ ! -d $OUTDIR ]
 then
    mkdir $OUTDIR
 fi
-#perl blender.pl $OPT $REF $GUIDE  $IP $CTRL > $OUTDIR/unfiltered_blender_hits.txt
+perl blender.pl $OPT $REF $GUIDE  $IP $CTRL > $OUTDIR/unfiltered_blender_hits.txt
 perl filter.pl $OUTDIR/unfiltered_blender_hits.txt > $OUTDIR/filtered_blender_hits.txt
 
 # Add PAM to guide for visualization
