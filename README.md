@@ -14,7 +14,7 @@ Alternatively, each step can be run separately.
             <path to control bamfile> \
             <guide sequence> <output directory> ["options"]
 
-This will run blender with option c set to 3 (details below), this means the program will run quickly, but may miss some very sparsely covered off target sites. I recommend running it initiall with c set to 3 (the default) and then running again (it may take several days, depending on the number of reads in your bamfile). 
+This will run blender with option c set to 3 (details below), this means the program will run quickly, but may miss some very sparsely covered off target sites. I recommend running it initiall with c set to 3 (the default) and then running again with c set to 2 (it may take several days, depending on the number of reads in your bamfile). 
 
 ## To run the blender script directly:
 
@@ -74,6 +74,7 @@ run_blender.sh outputs unfiltered_blender_hits.txt and filtered_blender_hits.txt
 BLENDER also creates an svg image of the hits something like this.
 
 ![blender sample output](https://github.com/staciawyman/blender/blob/master/blender_hits.png)
+
 
 ## Citing: 
 *Wienert, B., *Wyman, S. K., Richardson, C. D., Yeh, C. D., Akcakaya, P., Porritt, M. J., Morlock, M., Vu, J. T., Kazane, K. R., Watry, H. L., Judge, L. M., Conklin, B. R., Maresca, M. and Corn, J. E. (2019). Unbiased detection of CRISPR off-targets in vivo using DISCOVER-Seq. Science. *contributed equally
