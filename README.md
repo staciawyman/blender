@@ -9,8 +9,9 @@ Alternatively, each step can be run separately.
 
 ## Running the bash script:
 
-`sh run_blender.sh <path to reference genome> <path to IP bamfile> <path to control bamfile> \
-<guide sequence> <output directory> ["options"]`
+`sh run_blender.sh <path to reference genome> <path to IP bamfile> \'
+'	<path to control bamfile> \'
+'<guide sequence> <output directory> ["options"]`
 
 ## Usage:
 
