@@ -26,8 +26,12 @@ if [ ! -d $OUTDIR ]
 then
    mkdir $OUTDIR
 fi
+
 perl blender.pl $OPT $REF $GUIDE  $IP $CTRL > $OUTDIR/unfiltered_blender_hits.txt
+
+# For pooled samples, comment out the next line and uncomment the filter_pool.pl line
 perl filter.pl $OUTDIR/unfiltered_blender_hits.txt > $OUTDIR/filtered_blender_hits.txt
+#perl filter_pool.pl $OUTDIR/unfiltered_blender_hits.txt > $OUTDIR/filtered_pooled_blender_hits.txt
 
 # Add PAM to guide for visualization
 GUIDE+="NGG"
