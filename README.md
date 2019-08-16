@@ -95,11 +95,14 @@ To run BLENDER on the demo data, use the following command in the main blender d
 This will take approximately a minute or less to run, and the three output files can be found
 in the DEMO/blender directory.
 
+![blender sample output](https://github.com/staciawyman/blender/blob/master/DEMO/expected_output/blender_hits.png)
+
 The fastq files to run this data on all chromosomes can be found in the NCBI Short Read Archive
 with BioProject Accession PRJNA509652. The links to the fastq files are (click on "Data Access"
 tab to get fastq download):
 
 VEGFA IP Fastqs (BW43): https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR8550675
+
 BFP control fastqs (BW44): https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR8550676
 
 Bam files for the data will be available in the near future on the BioProject.
