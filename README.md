@@ -1,7 +1,7 @@
 # **BLENDER**
 ## About
 
-BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target editing sites from MRE11 ChIP-Seq experiments.  It takes aligned bamfiles from the IP experiment and (optionally) a control bamfile and identifies locations with stacks of reads at putative cutsites. PAM sequences can be provided by the user as well as a guide sequence. BLENDER makes use of the ENCODE ChIP-Seq Blacklists for human and mouse which are lists of regions in the genome that have artifactual large numbers of reads. These lists and the control bam plus PAM sequences and the guide are used to filter out false positives.  BLENDER runs on mouse mm10 and human hg38 genomes (blacklists coordinates are for these genomes). 
+BLENDER is a companion program to the DISCOVER-Seq assay to identify off-target CRISPR/Cas editing sites from MRE11 ChIP-Seq experiments described in "Unbiased detection of CRISPR off-targets in vivo using DISCOVER-Seq."  BLENDER takes aligned bamfiles from the MRE11 IP experiment and (optionally) a control bamfile and identifies locations with stacks of reads at putative cutsites. PAM sequences can be provided by the user as well as a guide sequence. BLENDER makes use of the ENCODE ChIP-Seq Blacklists for human and mouse which are lists of regions in the genome that have artifactual large numbers of reads. These lists and the control bam plus PAM sequences and the guide are used to filter out false positives.  BLENDER runs on mouse mm10 and human hg38 genomes (blacklists coordinates are for these genomes). 
 BLENDER has a driver script run_blender.sh that takes 5 (optionally 6) argmuments and runs identification of putative hits, filtering of those hits, and then creates an SVG of the aligned hits. Files are stored in the output directory given as a parameter to the bash script.
 Alternatively, each step can be run separately. 
 
@@ -95,7 +95,7 @@ To run BLENDER on the demo data, use the following command in the main blender d
 This will take approximately a minute or less to run, and the three output files can be found
 in the DEMO/blender directory.
 
-![blender sample output](https://github.com/staciawyman/blender/blob/master/blender_hits_demo.png)
+![blender demo output](https://github.com/staciawyman/blender/blob/master/blender_hits_demo.svg)
 
 The fastq files to run this data on all chromosomes can be found in the NCBI Short Read Archive
 with BioProject Accession PRJNA509652. The links to the fastq files are (click on "Data Access"
