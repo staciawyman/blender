@@ -95,7 +95,7 @@ To run BLENDER on the demo data, use the following command in the main blender d
 This will take approximately a minute or less to run, and the three output files can be found
 in the DEMO/blender directory.
 
-![blender demo output](https://github.com/staciawyman/blender/blob/master/blender_hits_demo.svg  )
+![blender demo output](https://github.com/staciawyman/blender/blob/master/blender_hits_demo2.svg  )
 
 The fastq files to run this data on all chromosomes can be found in the NCBI Short Read Archive
 with BioProject Accession PRJNA509652. The links to the fastq files are (click on "Data Access"
