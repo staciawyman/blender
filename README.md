@@ -76,6 +76,34 @@ BLENDER also creates an svg image of the hits something like this.
 ![blender sample output](https://github.com/staciawyman/blender/blob/master/blender_hits.png)
 
 
+## Demo:
+
+Demo data is included in the DEMO file. The DEMO directory contains data for running BLENDER on a single chromosome (chr19)
+for DISCOVER-Seq from MRE11 ChIP-Seq of the VEGFA site 2 guide in K562 cells.
+
+Bam files for the IP file and the control file (BFP ChIP) are provided in the bwa
+directory and expected output can be found in the expected_output directory. Chromosome 19
+has three off-target hits.
+
+To run BLENDER on the demo data, use the following command in the main blender directory:
+
+	sh run_blender.sh <path/to/reference/genome> \
+    		DEMO/bwa/BW43_VEFGA.chr19.bam \
+    		DEMO/bwa/BW44_BFP_control.chr19.bam \
+    		GACCCCCTCCACCCCGCCTC DEMO/blender
+
+This will take approximately a minute or less to run, and the three output files can be found
+in the DEMO/blender directory.
+
+The fastq files to run this data on all chromosomes can be found in the NCBI Short Read Archive
+with BioProject Accession PRJNA509652. The links to the fastq files are (click on "Data Access"
+tab to get fastq download):
+
+VEGFA IP Fastqs (BW43): https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR8550675
+BFP control fastqs (BW44): https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR8550676
+
+Bam files for the data will be available in the near future on the BioProject.
+
 ## Citing: 
 *Wienert, B., *Wyman, S. K., Richardson, C. D., Yeh, C. D., Akcakaya, P., Porritt, M. J., Morlock, M., Vu, J. T., Kazane, K. R., Watry, H. L., Judge, L. M., Conklin, B. R., Maresca, M. and Corn, J. E. (2019). Unbiased detection of CRISPR off-targets in vivo using DISCOVER-Seq. Science. *contributed equally
 

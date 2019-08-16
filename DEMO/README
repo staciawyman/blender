@@ -1,0 +1,33 @@
+# 15 August 2019  Stacia K. Wyman staciawyman@berkeley.edu
+
+BLENDER DEMO
+
+This DEMO directory contains data for running BLENDER on a single chromosome (chr19) 
+for DISCOVER-Seq from MRE11 ChIP-Seq of the VEGFA site 2 guide in K562 cells.
+This will produce the output (for chr19) based on "Unbiased detection of CRISPR 
+off-targets in vivo using DISCOVER-Seq" Science (2019) and found in Figure 4 of 
+"CRISPR off-target detection with DISCOVER-Seq", Nature Protocols (2019).
+
+Bam files for the IP file and the control file (BFP ChIP) are provided in the bwa
+directory and expected output can be found in the expected_output directory. Chromosome 19 
+has three off-target hits.
+
+To run BLENDER on the demo data, use the following command in the main blender directory:
+
+sh run_blender.sh <path/to/reference/genome> \
+    DEMO/bwa/BW43_VEFGA.chr19.bam \
+    DEMO/bwa/BW44_BFP_control.chr19.bam \
+    GACCCCCTCCACCCCGCCTC DEMO/blender
+
+This will take approximately a minute or less to run, and the three output files can be found 
+in the DEMO/blender directory. 
+
+The fastq files to run this data on all chromosomes can be found in the NCBI Short Read Archive 
+with BioProject Accession PRJNA509652. The links to the fastq files are (click on "Data Access" 
+tab to get fastq download):
+
+VEGFA IP Fastqs (BW43): https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR8550675
+BFP control fastqs (BW44): https://trace.ncbi.nlm.nih.gov/Traces/sra/?run=SRR8550676
+
+Bam files for the data will be available in the near future on the BioProject.
+
