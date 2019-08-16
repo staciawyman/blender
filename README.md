@@ -98,6 +98,8 @@ shows just the 3 hits found on chromosome 19:
 
 ![blender demo output](https://github.com/staciawyman/blender/blob/master/blender_hits_demo2.svg  )
 
+### Running from fastq files
+
 The fastq files to run this data on all chromosomes can be found in the NCBI Short Read Archive
 with BioProject Accession PRJNA509652. The links to the fastq files are (click on "Data Access"
 tab to get fastq download):
