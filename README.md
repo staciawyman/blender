@@ -76,7 +76,7 @@ BLENDER also creates an svg image of the hits something like this.
 ![blender sample output](https://github.com/staciawyman/blender/blob/master/blender_hits.png)
 
 
-## Demo:
+## Demo
 
 Demo data is included in the DEMO file. The DEMO directory contains data for running BLENDER on a single chromosome (chr19)
 for DISCOVER-Seq from MRE11 ChIP-Seq of the VEGFA site 2 guide in K562 cells.
@@ -95,7 +95,7 @@ To run BLENDER on the demo data, use the following command in the main blender d
 This will take approximately a minute or less to run, and the three output files can be found
 in the DEMO/blender directory.
 
-![blender sample output](https://github.com/staciawyman/blender/blob/master/DEMO/expected_output/blender_hits.png)
+![blender sample output](https://github.com/staciawyman/blender/blob/master/blender_hits_demo.png)
 
 The fastq files to run this data on all chromosomes can be found in the NCBI Short Read Archive
 with BioProject Accession PRJNA509652. The links to the fastq files are (click on "Data Access"
