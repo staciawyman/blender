@@ -93,7 +93,8 @@ To run BLENDER on the demo data, use the following command in the main blender d
     		GACCCCCTCCACCCCGCCTC DEMO/blender
 
 This will take approximately a minute or less to run, and the three output files can be found
-in the DEMO/blender directory.
+in the DEMO/blender directory. Because the bam file is just for chromosome 19, the output figure 
+shows just the 3 hits found on chromosome 19:
 
 ![blender demo output](https://github.com/staciawyman/blender/blob/master/blender_hits_demo2.svg  )
 
