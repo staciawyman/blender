@@ -1,0 +1,4 @@
+sh run_blender.sh /data/genomes/hg38.fa \
+    DEMO/bwa/BW43_VEFGA.chr19.bam \
+    DEMO/bwa/BW44_BFP_control.chr19.bam \
+    GACCCCCTCCACCCCGCCTC testDemo

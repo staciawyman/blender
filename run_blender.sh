@@ -4,12 +4,12 @@
 
 # sh run_blender.sh  <path to reference genome> <path to IP bam> <path to control bam> <guide sequence> <output directory> "options as string"
 
-OPT=$6
 REF=$1
 IP=$2
 CTRL=$3
 GUIDE=$4
 OUTDIR=$5
+OPT=$6
 
 if [ ! -e $IP ] 
 then
