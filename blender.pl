@@ -89,19 +89,25 @@ foreach $i (@chroms) {
 	chomp;
         my ($read,$flag,$chr,$start_loc,$MQ,$cigar,$a,$b,$tlen,$seq) = split(/\t/);
 	my $seqlen = length($seq) ;
-	if ($tlen == 0 && $flag & 0x08 && $MQ > 25) {
-	    if (!($flag & 0x10)) { 
+        # Test: 
+	# tlen == 0 means mate is unmapped
+        # flag & 0x08 == read is second in pair
+        # mapping quality over 25
+	if ($tlen == 0 && $MQ > 25) {
+	    if (!($flag & 0x08)) { # read is not second in pair
                 $for_starts{$start_loc}++;
 	        $both_starts{$start_loc}++;
-	    } else {
+	    } else { # second in pair, so pileup at other end of read
                 $rev_starts{$start_loc+$seqlen-1}++;
 	        $both_starts{$start_loc+$seqlen-1}++;
 	    }
 	}
+        # OR tlen < 0, so mate is upstream, this is second
 	if ($MQ > 25 && $tlen > 0) {
             $for_starts{$start_loc}++;
 	    $both_starts{$start_loc}++;
         }
+        # OR tlen > 0, so mate is downstream, this is first, so want to record 
 	if ($MQ > 25 && $tlen < 0) {
             $rev_starts{$start_loc+$seqlen-1}++;
 	    $both_starts{$start_loc+$seqlen-1}++;
